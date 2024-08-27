@@ -1,0 +1,195 @@
+@charset "UTF-8";
+/* CSS Document */
+
+html, body {
+    height: 100%;
+    margin: 0;
+    background-color: #f0f0f0;
+    font-family: Arial, sans-serif;
+    cursor: url('../images/Custom_Cursor.png'), auto; /* Apply custom cursor */
+    overflow: hidden; /* Prevent scrollbars */
+    user-select: none; /* Make text non-selectable */
+}
+
+.card-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    perspective: 1000px;
+    user-select: none; /* Make text non-selectable */
+}
+
+.card {
+    width: 300px;
+    height: 450px;
+    position: absolute; /* Ensure the card is positioned absolutely */
+    transform-style: preserve-3d;
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: url('../images/Custom_Cursor.png'), grab; /* Apply custom cursor */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 15px; /* Match the rounded corners */
+    user-select: none; /* Make text non-selectable */
+}
+
+.card:active {
+    cursor: url('./images/Custom_Cursor.png'), grabbing; /* Apply custom cursor */
+}
+
+.card.lifted {
+    transform: translateY(-10px); /* Slight lift effect */
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+}
+
+.card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    border-radius: 15px;
+    border: 3px solid #333;
+    font-size: 24px;
+    color: black;
+    cursor: url('../images/Custom_Cursor.png'), auto; /* Apply custom cursor */
+    background-color: #f9f5e8;
+    padding: 20px;
+    box-sizing: border-box; /* Ensure padding does not affect dimensions */
+    user-select: none; /* Make text non-selectable */
+}
+
+.card-back {
+    transform: rotateY(180deg);
+}
+
+.names {
+	margin-bottom: 40px;
+}
+.card-front h1 {
+    font-size: 36px;
+	font-family: sloop-script-pro, sans-serif;
+	margin: 0px;
+}
+
+.card-front h2 {
+    margin-bottom: 40px;
+    font-size: 36px;
+	font-family: sloop-script-pro, sans-serif;
+	font-weight: 400;
+	font-style: normal;
+}
+
+.card-front h3 {
+    margin: 0;
+    font-size: 24px;
+	font-family: sloop-script-pro, sans-serif;
+}
+
+.card-front p {
+    margin-top: 20px;
+    font-size: 36px;
+	font-family: sloop-script-pro, sans-serif;
+}
+
+.card-back h2 {
+    margin-bottom: 0px;
+    font-size: 22px;
+}
+
+.card-back p {
+    margin-top: 20px;
+	margin-bottom: 5px;
+    font-size: 16px;
+}
+
+.card-back img {
+    max-width: 100%;
+    max-height: 60%;
+    margin-top: 20px;
+    border-radius: 10px;
+    pointer-events: none; /* Disable pointer events on the image */
+}
+
+.card.flipped {
+    transform: rotateY(180deg);
+}
+
+/* Heart Container and Registry */
+.heart-link {
+    text-decoration: none; /* Ensure no underline on the link */
+}
+
+.heart-container {
+    position: absolute;
+    top: 30px; /* Move down from the top */
+    right: 30px; /* Move in from the right */
+    width: 60px; /* Increase size */
+    height: 60px; /* Increase size */
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.65s ease-in-out;
+    user-select: none; /* Make text non-selectable */
+}
+
+.heart {
+    width: 100%;
+    height: 100%;
+    background: url('../images/heart.svg') no-repeat center center;
+    background-size: contain;
+    animation: pulse 1.3s infinite;
+    position: relative;
+    user-select: none; /* Make text non-selectable */
+}
+
+.registry {
+    position: absolute;
+    opacity: 0;
+    font-size: 10px; /* Keep the text size the same */
+    color: white;
+    transition: opacity 0.5s ease;
+    text-align: center;
+    user-select: none; /* Make text non-selectable */
+    text-decoration: none; 
+}
+
+.heart-container:hover {
+    transform: scale(1.5);
+}
+
+.heart-container:hover .heart {
+    animation: none; /* Stop pulsing animation */
+}
+
+.heart-container:hover .registry {
+    opacity: 1;
+}
+
+.heart-container:hover .registry:hover {
+    text-decoration: none; 
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+/* Disclaimer */
+.disclaimer {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    font-size: 12px;
+    color: #333;
+    padding: 5px 10px;
+    border-radius: 5px;
+    user-select: none; /* Make text non-selectable */
+}
