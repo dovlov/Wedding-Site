@@ -1,9 +1,9 @@
 document.addEventListener("DOMContentLoaded", function() {
     const card = document.querySelector('.card');
     let isDragging = false;
-    let startX, startY, initialX, initialY;
+    let startX, startY;
     let moveFlag = false;
-    let clickThreshold = 5; // Threshold in pixels to distinguish between a click and a drag
+    const clickThreshold = 10; // Threshold in pixels to distinguish between a click and a drag
 
     // Function to get a random position within the viewport
     function getRandomPosition() {
@@ -40,14 +40,12 @@ document.addEventListener("DOMContentLoaded", function() {
         e.preventDefault();
         
         if (e.type === 'touchstart') {
-            startX = e.touches[0].clientX - card.offsetLeft;
-            startY = e.touches[0].clientY - card.offsetTop;
+            startX = e.touches[0].clientX;
+            startY = e.touches[0].clientY;
         } else {
-            startX = e.clientX - card.offsetLeft;
-            startY = e.clientY - card.offsetTop;
+            startX = e.clientX;
+            startY = e.clientY;
         }
-        initialX = card.offsetLeft;
-        initialY = card.offsetTop;
         card.classList.add('lifted'); // Add the lifted class when dragging starts
     }
 
@@ -56,23 +54,18 @@ document.addEventListener("DOMContentLoaded", function() {
         card.classList.remove('lifted'); // Remove the lifted class when dragging ends
         
         if (!moveFlag) {
-            // Determine whether the end event was a click or not
+            // Check if movement was within the click threshold
+            let endX, endY;
             if (e.type === 'touchend') {
-                // For touch events, use touchend event coordinates
-                let endX = e.changedTouches[0].clientX;
-                let endY = e.changedTouches[0].clientY;
-                // Compare with start coordinates to check if movement is within the threshold
-                if (Math.abs(endX - startX) < clickThreshold && Math.abs(endY - startY) < clickThreshold) {
-                    flipCard(e);
-                }
+                endX = e.changedTouches[0].clientX;
+                endY = e.changedTouches[0].clientY;
             } else {
-                // For mouse events, use mouseup event coordinates
-                let endX = e.clientX;
-                let endY = e.clientY;
-                // Compare with start coordinates to check if movement is within the threshold
-                if (Math.abs(endX - startX) < clickThreshold && Math.abs(endY - startY) < clickThreshold) {
-                    flipCard(e);
-                }
+                endX = e.clientX;
+                endY = e.clientY;
+            }
+            // Check if the move distance is within the threshold
+            if (Math.abs(endX - startX) < clickThreshold && Math.abs(endY - startY) < clickThreshold) {
+                flipCard(e);
             }
         }
     }
