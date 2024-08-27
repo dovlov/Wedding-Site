@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", function() {
     let touchStartX, touchStartY;
     let moveFlag = false;
     let clickTimeout;
+    const MIN_BOTTOM_DISTANCE = 30; // Minimum distance from the bottom of the screen
 
     // Function to get a random position within the viewport
     function getRandomPosition() {
@@ -13,8 +14,12 @@ document.addEventListener("DOMContentLoaded", function() {
         const windowWidth = window.innerWidth;
         const windowHeight = window.innerHeight;
 
-        const randomX = Math.random() * (windowWidth - cardWidth);
-        const randomY = Math.random() * (windowHeight - cardHeight);
+        // Ensure the card is not less than MIN_BOTTOM_DISTANCE from the bottom
+        const maxX = windowWidth - cardWidth;
+        const maxY = windowHeight - cardHeight - MIN_BOTTOM_DISTANCE;
+
+        const randomX = Math.random() * maxX;
+        const randomY = Math.random() * maxY;
 
         return { x: randomX, y: randomY };
     }

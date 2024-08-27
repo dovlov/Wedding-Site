@@ -69,9 +69,10 @@ html, body {
 	margin-bottom: 40px;
 }
 .card-front h1 {
-    font-size: 36px;
-	font-family: sloop-script-pro, sans-serif;
 	margin: 0px;
+	font-size: 36px;
+	font-family: sloop-script-pro, bold;
+	font-weight: 700;
 }
 
 .card-front h2 {
@@ -85,7 +86,8 @@ html, body {
 .card-front h3 {
     margin: 0;
     font-size: 24px;
-	font-family: sloop-script-pro, sans-serif;
+	font-family: sloop-script-pro, bold;
+	font-weight: 700;
 }
 
 .card-front p {
