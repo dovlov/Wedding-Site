@@ -2,8 +2,9 @@ document.addEventListener("DOMContentLoaded", function() {
     const card = document.querySelector('.card');
     let isDragging = false;
     let startX, startY;
+    let touchStartX, touchStartY;
     let moveFlag = false;
-    const clickThreshold = 10; // Threshold in pixels to distinguish between a click and a drag
+    let clickTimeout;
 
     // Function to get a random position within the viewport
     function getRandomPosition() {
@@ -11,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const cardHeight = card.offsetHeight;
         const windowWidth = window.innerWidth;
         const windowHeight = window.innerHeight;
-        
+
         const randomX = Math.random() * (windowWidth - cardWidth);
         const randomY = Math.random() * (windowHeight - cardHeight);
 
@@ -27,7 +28,6 @@ document.addEventListener("DOMContentLoaded", function() {
     card.addEventListener('mousedown', dragStart);
     document.addEventListener('mouseup', dragEnd);
     document.addEventListener('mousemove', drag);
-    card.addEventListener('click', flipCard);
 
     // Touch Events
     card.addEventListener('touchstart', dragStart);
@@ -35,17 +35,20 @@ document.addEventListener("DOMContentLoaded", function() {
     document.addEventListener('touchmove', drag);
 
     function dragStart(e) {
+        e.preventDefault();
         isDragging = true;
         moveFlag = false;
-        e.preventDefault();
         
         if (e.type === 'touchstart') {
-            startX = e.touches[0].clientX;
-            startY = e.touches[0].clientY;
+            touchStartX = e.touches[0].clientX;
+            touchStartY = e.touches[0].clientY;
+            startX = touchStartX - card.offsetLeft;
+            startY = touchStartY - card.offsetTop;
         } else {
-            startX = e.clientX;
-            startY = e.clientY;
+            startX = e.clientX - card.offsetLeft;
+            startY = e.clientY - card.offsetTop;
         }
+
         card.classList.add('lifted'); // Add the lifted class when dragging starts
     }
 
@@ -53,19 +56,14 @@ document.addEventListener("DOMContentLoaded", function() {
         isDragging = false;
         card.classList.remove('lifted'); // Remove the lifted class when dragging ends
         
+        // Handle click
         if (!moveFlag) {
-            // Check if movement was within the click threshold
-            let endX, endY;
             if (e.type === 'touchend') {
-                endX = e.changedTouches[0].clientX;
-                endY = e.changedTouches[0].clientY;
+                clearTimeout(clickTimeout);
+                clickTimeout = setTimeout(() => flipCard(), 150); // Allow some time for click handling
             } else {
-                endX = e.clientX;
-                endY = e.clientY;
-            }
-            // Check if the move distance is within the threshold
-            if (Math.abs(endX - startX) < clickThreshold && Math.abs(endY - startY) < clickThreshold) {
-                flipCard(e);
+                clearTimeout(clickTimeout);
+                clickTimeout = setTimeout(() => flipCard(), 150); // Allow some time for click handling
             }
         }
     }
@@ -84,7 +82,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
-    function flipCard(e) {
+    function flipCard() {
         card.classList.toggle('flipped');
     }
 });
