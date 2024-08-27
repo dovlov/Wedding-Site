@@ -66,34 +66,35 @@ html, body {
 }
 
 .names {
-	margin-bottom: 40px;
+    margin-bottom: 40px;
 }
+
 .card-front h1 {
-	margin: 0px;
-	font-size: 36px;
-	font-family: sloop-script-pro, bold;
-	font-weight: 700;
+    margin: 0px;
+    font-size: 36px;
+    font-family: sloop-script-pro, bold;
+    font-weight: 700;
 }
 
 .card-front h2 {
     margin-bottom: 40px;
     font-size: 36px;
-	font-family: sloop-script-pro, sans-serif;
-	font-weight: 400;
-	font-style: normal;
+    font-family: sloop-script-pro, sans-serif;
+    font-weight: 400;
+    font-style: normal;
 }
 
 .card-front h3 {
     margin: 0;
     font-size: 24px;
-	font-family: sloop-script-pro, bold;
-	font-weight: 700;
+    font-family: sloop-script-pro, bold;
+    font-weight: 700;
 }
 
 .card-front p {
     margin-top: 20px;
     font-size: 36px;
-	font-family: sloop-script-pro, sans-serif;
+    font-family: sloop-script-pro, sans-serif;
 }
 
 .card-back h2 {
@@ -103,7 +104,7 @@ html, body {
 
 .card-back p {
     margin-top: 20px;
-	margin-bottom: 5px;
+    margin-bottom: 5px;
     font-size: 16px;
 }
 
@@ -134,7 +135,7 @@ html, body {
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: transform 0.65s ease-in-out;
+    transition: transform 0.65s ease-in-out, opacity 0.5s ease;
     user-select: none; /* Make text non-selectable */
 }
 
@@ -159,20 +160,19 @@ html, body {
     text-decoration: none; 
 }
 
+.heart-container.expanded,
 .heart-container:hover {
     transform: scale(1.5);
 }
 
+.heart-container.expanded .heart,
 .heart-container:hover .heart {
     animation: none; /* Stop pulsing animation */
 }
 
+.heart-container.expanded .registry,
 .heart-container:hover .registry {
-    opacity: 1;
-}
-
-.heart-container:hover .registry:hover {
-    text-decoration: none; 
+    opacity: 1; /* Show the text on hover or when expanded */
 }
 
 @keyframes pulse {

@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", function() {
     const card = document.querySelector('.card');
-    const registryLink = document.querySelector('.heart-link');
+    const heartContainer = document.querySelector('.heart-container');
+    const registry = document.querySelector('.registry');
     let isDragging = false;
     let startX, startY;
     let touchStartX, touchStartY;
@@ -40,25 +41,11 @@ document.addEventListener("DOMContentLoaded", function() {
     document.addEventListener('touchend', dragEnd);
     document.addEventListener('touchmove', drag);
 
-    // Function to check if the device is a desktop or mobile
-    function isDesktop() {
-        return window.innerWidth > 768; // Adjust the width according to your breakpoint for desktop
-    }
-
-    // Function to adjust the link behavior based on the device type
-    function adjustRegistryLink() {
-        if (isDesktop()) {
-            registryLink.setAttribute('target', '_blank');
-        } else {
-            registryLink.removeAttribute('target');
-        }
-    }
-
     function dragStart(e) {
         e.preventDefault();
         isDragging = true;
         moveFlag = false;
-        
+
         if (e.type === 'touchstart') {
             touchStartX = e.touches[0].clientX;
             touchStartY = e.touches[0].clientY;
@@ -106,7 +93,21 @@ document.addEventListener("DOMContentLoaded", function() {
         card.classList.toggle('flipped');
     }
 
-    // Initial adjustment of the registry link and on window resize
-    adjustRegistryLink();
-    window.addEventListener('resize', adjustRegistryLink);
+    // Simulate hover effect for 3 seconds on page load
+    heartContainer.classList.add('expanded');
+    registry.style.opacity = '1';
+
+    setTimeout(() => {
+        heartContainer.classList.remove('expanded');
+        registry.style.opacity = '0';  // Ensure text disappears after 3 seconds
+    }, 3000);
+
+    // Ensure the hover effect works after the initial animation
+    heartContainer.addEventListener('mouseover', function() {
+        registry.style.opacity = '1';
+    });
+
+    heartContainer.addEventListener('mouseout', function() {
+        registry.style.opacity = '0';
+    });
 });
