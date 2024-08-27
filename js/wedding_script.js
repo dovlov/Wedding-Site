@@ -22,16 +22,30 @@ document.addEventListener("DOMContentLoaded", function() {
     card.style.left = `${x}px`;
     card.style.top = `${y}px`;
 
+    // Mouse Events
     card.addEventListener('mousedown', dragStart);
     document.addEventListener('mouseup', dragEnd);
     document.addEventListener('mousemove', drag);
     card.addEventListener('click', flipCard);
 
+    // Touch Events
+    card.addEventListener('touchstart', dragStart);
+    document.addEventListener('touchend', dragEnd);
+    document.addEventListener('touchmove', drag);
+
     function dragStart(e) {
         isDragging = true;
         moveFlag = false;
-        startX = e.clientX - card.offsetLeft;
-        startY = e.clientY - card.offsetTop;
+        // Prevent touch event from triggering mouse events
+        e.preventDefault();
+        
+        if (e.type === 'touchstart') {
+            startX = e.touches[0].clientX - card.offsetLeft;
+            startY = e.touches[0].clientY - card.offsetTop;
+        } else {
+            startX = e.clientX - card.offsetLeft;
+            startY = e.clientY - card.offsetTop;
+        }
         initialX = card.offsetLeft;
         initialY = card.offsetTop;
         card.classList.add('lifted'); // Add the lifted class when dragging starts
@@ -45,8 +59,13 @@ document.addEventListener("DOMContentLoaded", function() {
     function drag(e) {
         if (isDragging) {
             e.preventDefault();
-            card.style.left = `${e.clientX - startX}px`;
-            card.style.top = `${e.clientY - startY}px`;
+            if (e.type === 'touchmove') {
+                card.style.left = `${e.touches[0].clientX - startX}px`;
+                card.style.top = `${e.touches[0].clientY - startY}px`;
+            } else {
+                card.style.left = `${e.clientX - startX}px`;
+                card.style.top = `${e.clientY - startY}px`;
+            }
             moveFlag = true;
         }
     }
