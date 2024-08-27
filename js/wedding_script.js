@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const card = document.querySelector('.card');
     const heartContainer = document.querySelector('.heart-container');
     const registry = document.querySelector('.registry');
-    const mapLink = document.querySelector('.card-back a'); // Select the map link
+    const mapLink = document.querySelector('.card-back a');
 
     let isDragging = false;
     let startX, startY;
@@ -98,6 +98,12 @@ document.addEventListener("DOMContentLoaded", function() {
     // Ensure map link works on touch devices
     mapLink.addEventListener('click', function(e) {
         e.stopPropagation(); // Prevent the event from being blocked by other event listeners
+    });
+
+    mapLink.addEventListener('touchend', function(e) {
+        e.stopPropagation();
+        // Manually trigger click in case touch doesn't
+        window.location.href = mapLink.href;
     });
 
     // Simulate hover effect for 3 seconds on page load
