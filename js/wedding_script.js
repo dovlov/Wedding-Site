@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", function() {
     let isDragging = false;
     let startX, startY, initialX, initialY;
     let moveFlag = false;
+    let clickThreshold = 5; // Threshold in pixels to distinguish between a click and a drag
 
     // Function to get a random position within the viewport
     function getRandomPosition() {
@@ -36,7 +37,6 @@ document.addEventListener("DOMContentLoaded", function() {
     function dragStart(e) {
         isDragging = true;
         moveFlag = false;
-        // Prevent touch event from triggering mouse events
         e.preventDefault();
         
         if (e.type === 'touchstart') {
@@ -51,9 +51,30 @@ document.addEventListener("DOMContentLoaded", function() {
         card.classList.add('lifted'); // Add the lifted class when dragging starts
     }
 
-    function dragEnd() {
+    function dragEnd(e) {
         isDragging = false;
         card.classList.remove('lifted'); // Remove the lifted class when dragging ends
+        
+        if (!moveFlag) {
+            // Determine whether the end event was a click or not
+            if (e.type === 'touchend') {
+                // For touch events, use touchend event coordinates
+                let endX = e.changedTouches[0].clientX;
+                let endY = e.changedTouches[0].clientY;
+                // Compare with start coordinates to check if movement is within the threshold
+                if (Math.abs(endX - startX) < clickThreshold && Math.abs(endY - startY) < clickThreshold) {
+                    flipCard(e);
+                }
+            } else {
+                // For mouse events, use mouseup event coordinates
+                let endX = e.clientX;
+                let endY = e.clientY;
+                // Compare with start coordinates to check if movement is within the threshold
+                if (Math.abs(endX - startX) < clickThreshold && Math.abs(endY - startY) < clickThreshold) {
+                    flipCard(e);
+                }
+            }
+        }
     }
 
     function drag(e) {
@@ -71,8 +92,6 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function flipCard(e) {
-        if (!moveFlag) {
-            card.classList.toggle('flipped');
-        }
+        card.classList.toggle('flipped');
     }
 });
