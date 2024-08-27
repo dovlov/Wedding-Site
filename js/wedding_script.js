@@ -106,14 +106,14 @@ document.addEventListener("DOMContentLoaded", function() {
         window.location.href = mapLink.href;
     });
 
-    // Simulate hover effect for 3 seconds on page load
+    // Simulate hover effect for 5 seconds on page load
     heartContainer.classList.add('expanded');
     registry.style.opacity = '1';
 
     setTimeout(() => {
         heartContainer.classList.remove('expanded');
-        registry.style.opacity = '0';  // Ensure text disappears after 3 seconds
-    }, 3000);
+        registry.style.opacity = '0';  // Ensure text disappears after 5 seconds
+    }, 5000);  // Updated to 5000ms (5 seconds)
 
     // Ensure the hover effect works after the initial animation
     heartContainer.addEventListener('mouseover', function() {
