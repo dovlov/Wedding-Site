@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
     const card = document.querySelector('.card');
+    const registryLink = document.querySelector('.heart-link');
     let isDragging = false;
     let startX, startY;
     let touchStartX, touchStartY;
@@ -38,6 +39,20 @@ document.addEventListener("DOMContentLoaded", function() {
     card.addEventListener('touchstart', dragStart);
     document.addEventListener('touchend', dragEnd);
     document.addEventListener('touchmove', drag);
+
+    // Function to check if the device is a desktop or mobile
+    function isDesktop() {
+        return window.innerWidth > 768; // Adjust the width according to your breakpoint for desktop
+    }
+
+    // Function to adjust the link behavior based on the device type
+    function adjustRegistryLink() {
+        if (isDesktop()) {
+            registryLink.setAttribute('target', '_blank');
+        } else {
+            registryLink.removeAttribute('target');
+        }
+    }
 
     function dragStart(e) {
         e.preventDefault();
@@ -90,4 +105,8 @@ document.addEventListener("DOMContentLoaded", function() {
     function flipCard() {
         card.classList.toggle('flipped');
     }
+
+    // Initial adjustment of the registry link and on window resize
+    adjustRegistryLink();
+    window.addEventListener('resize', adjustRegistryLink);
 });
